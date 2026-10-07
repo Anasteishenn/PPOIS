@@ -1,0 +1,10 @@
+cat;кошка
+dog;собака
+house;дом
+book;книга
+apple;яблоко
+water;вода
+tree;дерево
+sun;солнце
+moon;луна
+friend;друг

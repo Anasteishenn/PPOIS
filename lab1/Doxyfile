@@ -1,0 +1,27 @@
+# Doxyfile для лабораторной работы №1.
+# Запуск (из папки lab1):  doxygen Doxyfile
+# Результат: docs/html/index.html
+
+PROJECT_NAME           = "Лабораторная работа 1: Словарь и Пятнашки"
+PROJECT_BRIEF          = "Классы Dictionary (англо-русский словарь) и Fifteen (пятнашки)"
+OUTPUT_LANGUAGE        = Russian
+DOXYFILE_ENCODING      = UTF-8
+INPUT_ENCODING         = UTF-8
+
+OUTPUT_DIRECTORY       = docs
+INPUT                  = include src app README.md
+FILE_PATTERNS          = *.h *.cpp *.md
+RECURSIVE              = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+JAVADOC_AUTOBRIEF      = YES
+BUILTIN_STL_SUPPORT    = YES
+
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HAVE_DOT               = NO
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = YES

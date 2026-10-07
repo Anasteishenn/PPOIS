@@ -1,0 +1,18 @@
+# Артефакты сборки
+build/
+out/
+*.o
+*.obj
+*.exe
+*.gcda
+*.gcno
+
+# Сгенерированная документация
+docs/
+
+# Файлы IDE
+.vs/
+.vscode/
+.idea/
+*.user
+CMakeUserPresets.json
