@@ -8,11 +8,15 @@ on:
 
 jobs:
   test:
-    name: Тесты, покрытие, анализ кода, документация
+    name: Тесты, покрытие, анализ кода, документация (${{ matrix.lab }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        lab: [lab1, lab2]
     defaults:
       run:
-        working-directory: lab1
+        working-directory: ${{ matrix.lab }}
     steps:
       - uses: actions/checkout@v4
       - name: Установка инструментов
@@ -34,12 +38,19 @@ jobs:
         run: doxygen Doxyfile
 
   build-windows:
-    name: Сборка под Windows
+    name: Сборка под Windows (${{ matrix.lab }})
     needs: test
     runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - lab: lab1
+            package: build/bin/dictionary_app.exe, build/bin/fifteen_app.exe, data
+          - lab: lab2
+            package: build/bin/culinary_app.exe
     defaults:
       run:
-        working-directory: lab1
+        working-directory: ${{ matrix.lab }}
     steps:
       - uses: actions/checkout@v4
       - name: Сборка
@@ -49,11 +60,11 @@ jobs:
       - name: Тесты
         run: ctest --test-dir build -C Release --output-on-failure
       - name: Упаковка
-        run: Compress-Archive -Path build/bin/dictionary_app.exe, build/bin/fifteen_app.exe, data -DestinationPath lab1-windows.zip
+        run: Compress-Archive -Path ${{ matrix.package }} -DestinationPath ${{ matrix.lab }}-windows.zip
       - uses: actions/upload-artifact@v4
         with:
-          name: lab1-windows
-          path: lab1/lab1-windows.zip
+          name: ${{ matrix.lab }}-windows
+          path: ${{ matrix.lab }}/${{ matrix.lab }}-windows.zip
 
   release:
     name: Публикация в Releases
@@ -65,7 +76,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: lab1-windows
+          pattern: '*-windows'
+          merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
-          files: lab1-windows.zip
+          files: '*-windows.zip'
