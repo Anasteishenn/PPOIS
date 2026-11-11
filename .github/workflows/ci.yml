@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        lab: [lab1, lab2]
+        lab: [lab1, lab2, lab3]
     defaults:
       run:
         working-directory: ${{ matrix.lab }}
@@ -48,6 +48,8 @@ jobs:
             package: build/bin/dictionary_app.exe, build/bin/fifteen_app.exe, data
           - lab: lab2
             package: build/bin/culinary_app.exe
+          - lab: lab3
+            package: build/bin/atm_app.exe
     defaults:
       run:
         working-directory: ${{ matrix.lab }}
